@@ -26,9 +26,9 @@ typedef struct _XMLDocument XMLDocument;
 int charactersInFile(FILE *file);
 void XML_free(FILE *file);
 void extractFileName(char *fileName, char *commandLine);
-void XML_Load(char *fileName, FILE *XMLDocument);
+void XML_Load(char *fileName, FILE *XMLDocument, char* fileContent);
 
-//XMLNode *newXMLNode(XMLNode *parent);
-//void XMLNode_free(XMLNode *parent);
+XMLNode *newXMLNode(XMLNode *parent);
+void XMLNode_free(XMLNode *parent);
 
 
