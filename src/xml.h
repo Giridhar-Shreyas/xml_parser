@@ -7,27 +7,28 @@
 //
 //  Definitions
 //
-struct XMLNode
+
+struct _XMLNode
 {
     char* tag;
     char* inner_text;
-    XMLNode* parent;
+    struct _XMLNode* parent;
 };
-typedef struct XMLNode;
+typedef struct _XMLNode XMLNode;
 
 
-struct XMLDocument
+struct _XMLDocument
 {
     XMLNode* root;
 };
-typedef struct XMLDocument;
+typedef struct _XMLDocument XMLDocument;
 
 int charactersInFile(FILE *file);
 void XML_free(FILE *file);
 void extractFileName(char *fileName, char *commandLine);
 void XML_Load(char *fileName, FILE *XMLDocument);
 
-XMLNode *newXMLNode(XMLNode *parent);
-void XMLNode_free(XMLNode *parent);
+//XMLNode *newXMLNode(XMLNode *parent);
+//void XMLNode_free(XMLNode *parent);
 
 
