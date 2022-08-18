@@ -11,10 +11,6 @@ int charactersInFile(FILE *file){
     return size;
 }
 
-void XML_free(FILE *file){
-    fclose(file);
-}
-
 void extractFileName(char *fileName, char *commandLine){
     int size = 0;
     while(commandLine[size] != 'l'){
@@ -41,6 +37,22 @@ void XML_Load(char *fileName, FILE *XMLDocument, char *fileContent){
     }
     else{
         fprintf(stderr, "The file could not be opened\n");
+    }
+}
+
+XMLNode *newXMLNode(XMLNode *parent){
+    XMLNode* node = malloc(sizeof(XMLNode));
+    node->tag = NULL;
+    node->inner_text = NULL;
+    node->parent = parent;
+    return node;
+}
+void XMLNode_free(XMLNode *node){
+    if(node->tag != NULL){
+        free(node->tag);
+    }
+    if(node->inner_text != NULL){
+        free(node->inner_text);
     }
 }
 
