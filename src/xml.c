@@ -24,15 +24,28 @@ void extractFileName(char *fileName, char *commandLine){
     fileName[i+1] = '\0';
 }
 
-void XML_Load(char *fileName, FILE *XMLDocument, char *fileContent){
-    XMLDocument = fopen(fileName, "r");
-    if(XMLDocument != NULL){
+void XML_Load(char *fileName, char *fileContent, XMLDocument *doc){
+    FILE *file;
+    file = fopen(fileName, "r");
+    if(file != NULL){
         fprintf(stdout, "The file has been opened.\n");
-        int size = charactersInFile(XMLDocument);
+        int size = charactersInFile(file);
         fileContent = realloc(fileContent, (size)*sizeof(char));
-        fread(fileContent, size, sizeof(char), XMLDocument);
+        fread(fileContent, size, sizeof(char), file);
         fileContent[size]= '\0';
-        fclose(XMLDocument);
+        fclose(file);
+
+        doc->root = newXMLNode(NULL);
+
+        XMLNode *curr_node = NULL;
+
+        char lex[256];
+        int lexi = 0;
+        int i = 0;
+
+        /*while(fileContent[i] != '\0'){
+
+        }*/
     }
     else{
         fprintf(stderr, "The file could not be opened\n");

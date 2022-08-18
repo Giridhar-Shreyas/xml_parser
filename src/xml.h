@@ -22,7 +22,7 @@ typedef struct _XMLDocument XMLDocument;
 
 int charactersInFile(FILE *file);
 void extractFileName(char *fileName, char *commandLine);
-void XML_Load(char *fileName, FILE *XMLDocument, char* fileContent);
+void XML_Load(char *fileName, char* fileContent, XMLDocument *doc);
 
 XMLNode *newXMLNode(XMLNode *parent);
 void XMLNode_free(XMLNode *node);

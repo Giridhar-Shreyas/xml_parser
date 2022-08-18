@@ -7,7 +7,7 @@ test: $(SRC_FILES)
 	gcc $(CFLAGS) $(SRC_FILES) -lm -o main.out
 
 clean:
-	rm -f main.out *.o
+	rm -f main.out
 
 run: test
 	./main.out
