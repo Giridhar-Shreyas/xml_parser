@@ -43,9 +43,9 @@ void XML_Load(char *fileName, char *fileContent, XMLDocument *doc){
         int lexi = 0;
         int i = 0;
 
-        /*while(fileContent[i] != '\0'){
+        while(fileContent[i] != '\0'){
 
-        }*/
+        }
     }
     else{
         fprintf(stderr, "The file could not be opened\n");
