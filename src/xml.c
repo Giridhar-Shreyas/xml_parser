@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "xml.h"
+#define FALSE 0
+#define TRUE 1
 
 int charactersInFile(FILE *file){
     fseek(file, 0, SEEK_END);
@@ -37,14 +39,63 @@ void XML_Load(char *fileName, char *fileContent, XMLDocument *doc){
 
         doc->root = newXMLNode(NULL);
 
-        XMLNode *curr_node = NULL;
+        XMLNode* curr_node = NULL;
 
         char lex[256];
         int lexi = 0;
         int i = 0;
-
         while(fileContent[i] != '\0'){
+            if(fileContent[i] == '<'){
+                lex[lexi] = '\0';
+                if(lexi > 0 ){
+                    if(!curr_node){
+                        fprintf(stderr, "Text outside document");
+                        break;
+                    }
+                    curr_node->inner_text = strdup(lex);
+                    lexi = 0;
+                }
+                
+                if(fileContent[i+1] == '/'){
+                    i += 2;
+                    while(fileContent[i] != '>'){
+                        lex[lexi++] = fileContent[i++];
+                    }
+                    lex[lexi] = '\0';
 
+                    if(!curr_node){
+                        fprintf(stderr, "Already at the root");
+                        break;
+                    }
+                    if(strcmp(curr_node->tag, lex)){
+                        fprintf(stderr, "Missmatched tags (%s != %s)", curr_node->tag, lex);
+                        break;
+                        
+                    }
+                    curr_node = curr_node->parent;
+                    i++;
+                    continue;
+                }
+                if(!curr_node){
+                    curr_node = doc->root;
+                }
+                else{
+                    curr_node = newXMLNode(curr_node);
+                }
+                i++;
+                while(fileContent[i] != '>'){
+                    lex[lexi++] = fileContent[i++];
+                }
+                lex[lexi] = '\0';
+                curr_node->tag = strdup(lex);
+
+                lexi = 0;
+                i++;
+                continue;
+            }
+            else{
+                lex[lexi++] = fileContent[i++];
+            }
         }
     }
     else{

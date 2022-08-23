@@ -21,7 +21,7 @@ int main(void){
     //  Loading the file
     extractFileName(fileName, commandLine);
     XML_Load(fileName, fileContent, doc);
-    //printf("The root tag: %s\n", doc->root->tag);
+    printf("The root tag: %s\n", doc->root->inner_text);
 
     return 0;
 }

@@ -26,4 +26,5 @@ void XML_Load(char *fileName, char* fileContent, XMLDocument *doc);
 
 XMLNode *newXMLNode(XMLNode *parent);
 void XMLNode_free(XMLNode *node);
+char * strdup( const char *str1 );
 
