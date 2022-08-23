@@ -45,28 +45,41 @@ void XML_Load(char *fileName, char *fileContent, XMLDocument *doc){
         int lexi = 0;
         int i = 0;
         while(fileContent[i] != '\0'){
+
+            // Begning of the node
             if(fileContent[i] == '<'){
                 lex[lexi] = '\0';
+                
+                // if there is some text before the opening of a node and the current node's tag is null return error
                 if(lexi > 0 ){
                     if(!curr_node){
                         fprintf(stderr, "Text outside document");
                         break;
                     }
+
+                    // else store it as inner text
                     curr_node->inner_text = strdup(lex);
                     lexi = 0;
                 }
                 
+
+                // End of tag 
                 if(fileContent[i+1] == '/'){
                     i += 2;
+
+                    // read the tag into lex untill closing tag
                     while(fileContent[i] != '>'){
                         lex[lexi++] = fileContent[i++];
                     }
                     lex[lexi] = '\0';
 
+                    // if the current node is null, then the closing tag has been read before opening 
                     if(!curr_node){
                         fprintf(stderr, "Already at the root");
                         break;
                     }
+
+                    // If the opening tag is different from the closing tag
                     if(strcmp(curr_node->tag, lex)){
                         fprintf(stderr, "Missmatched tags (%s != %s)", curr_node->tag, lex);
                         break;
@@ -93,6 +106,8 @@ void XML_Load(char *fileName, char *fileContent, XMLDocument *doc){
                 i++;
                 continue;
             }
+
+            // copy the inner text is no opening tags are found
             else{
                 lex[lexi++] = fileContent[i++];
             }
