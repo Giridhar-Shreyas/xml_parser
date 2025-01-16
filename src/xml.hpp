@@ -15,17 +15,21 @@ private:
         std::string tag;
         std::map<std::string, std::string> attributes;
         std::vector<XMLNode*> children;
-        std::string innerText = "none";
+        std::string innerText = "";
+        bool hasInnerText = false;
     };
 
     std::ifstream doc;
     bool rootSet = false;
-    XMLNode *root;
+    bool unexpectedNl = false;
+    char expectedChar;
+    XMLNode *root=nullptr;
     XMLNode *currNode;
     std::queue<XMLNode*> currParent;
     
     bool loadFile();
     void parse();
+    void parseRoot();
 
    
 public:

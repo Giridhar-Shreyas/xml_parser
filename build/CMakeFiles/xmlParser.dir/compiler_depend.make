@@ -21,6 +21,7 @@ CMakeFiles/xmlParser.dir/src/main.cpp.o: /home/shreyas/Documents/xmlParser/xml_p
   /usr/include/c++/11/bits/cpp_type_traits.h \
   /usr/include/c++/11/bits/cxxabi_forced.h \
   /usr/include/c++/11/bits/cxxabi_init_exception.h \
+  /usr/include/c++/11/bits/deque.tcc \
   /usr/include/c++/11/bits/erase_if.h \
   /usr/include/c++/11/bits/exception.h \
   /usr/include/c++/11/bits/exception_defines.h \
@@ -51,13 +52,16 @@ CMakeFiles/xmlParser.dir/src/main.cpp.o: /home/shreyas/Documents/xmlParser/xml_p
   /usr/include/c++/11/bits/stl_algobase.h \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/stl_construct.h \
+  /usr/include/c++/11/bits/stl_deque.h \
   /usr/include/c++/11/bits/stl_function.h \
+  /usr/include/c++/11/bits/stl_heap.h \
   /usr/include/c++/11/bits/stl_iterator.h \
   /usr/include/c++/11/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/11/bits/stl_iterator_base_types.h \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h \
   /usr/include/c++/11/bits/stl_pair.h \
+  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/c++/11/bits/stl_relops.h \
   /usr/include/c++/11/bits/stl_tree.h \
   /usr/include/c++/11/bits/stl_uninitialized.h \
@@ -78,6 +82,7 @@ CMakeFiles/xmlParser.dir/src/main.cpp.o: /home/shreyas/Documents/xmlParser/xml_p
   /usr/include/c++/11/cwctype \
   /usr/include/c++/11/debug/assertions.h \
   /usr/include/c++/11/debug/debug.h \
+  /usr/include/c++/11/deque \
   /usr/include/c++/11/exception \
   /usr/include/c++/11/ext/aligned_buffer.h \
   /usr/include/c++/11/ext/alloc_traits.h \
@@ -96,6 +101,7 @@ CMakeFiles/xmlParser.dir/src/main.cpp.o: /home/shreyas/Documents/xmlParser/xml_p
   /usr/include/c++/11/new \
   /usr/include/c++/11/ostream \
   /usr/include/c++/11/pstl/pstl_config.h \
+  /usr/include/c++/11/queue \
   /usr/include/c++/11/stdexcept \
   /usr/include/c++/11/streambuf \
   /usr/include/c++/11/string \
@@ -226,6 +232,7 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
   /usr/include/c++/11/bits/cpp_type_traits.h \
   /usr/include/c++/11/bits/cxxabi_forced.h \
   /usr/include/c++/11/bits/cxxabi_init_exception.h \
+  /usr/include/c++/11/bits/deque.tcc \
   /usr/include/c++/11/bits/erase_if.h \
   /usr/include/c++/11/bits/exception.h \
   /usr/include/c++/11/bits/exception_defines.h \
@@ -256,13 +263,16 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
   /usr/include/c++/11/bits/stl_algobase.h \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/stl_construct.h \
+  /usr/include/c++/11/bits/stl_deque.h \
   /usr/include/c++/11/bits/stl_function.h \
+  /usr/include/c++/11/bits/stl_heap.h \
   /usr/include/c++/11/bits/stl_iterator.h \
   /usr/include/c++/11/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/11/bits/stl_iterator_base_types.h \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h \
   /usr/include/c++/11/bits/stl_pair.h \
+  /usr/include/c++/11/bits/stl_queue.h \
   /usr/include/c++/11/bits/stl_relops.h \
   /usr/include/c++/11/bits/stl_tree.h \
   /usr/include/c++/11/bits/stl_uninitialized.h \
@@ -283,6 +293,7 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
   /usr/include/c++/11/cwctype \
   /usr/include/c++/11/debug/assertions.h \
   /usr/include/c++/11/debug/debug.h \
+  /usr/include/c++/11/deque \
   /usr/include/c++/11/exception \
   /usr/include/c++/11/ext/aligned_buffer.h \
   /usr/include/c++/11/ext/alloc_traits.h \
@@ -301,6 +312,7 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
   /usr/include/c++/11/new \
   /usr/include/c++/11/ostream \
   /usr/include/c++/11/pstl/pstl_config.h \
+  /usr/include/c++/11/queue \
   /usr/include/c++/11/stdexcept \
   /usr/include/c++/11/streambuf \
   /usr/include/c++/11/string \
@@ -494,10 +506,6 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
@@ -528,17 +536,15 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
-/usr/include/c++/11/bits/alloc_traits.h:
+/usr/include/x86_64-linux-gnu/bits/endianness.h:
 
-/usr/include/c++/11/bits/stl_function.h:
+/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
 
-/usr/include/x86_64-linux-gnu/bits/time.h:
+/usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
-/usr/include/c++/11/bits/stl_pair.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
-/usr/include/c++/11/ext/atomicity.h:
-
-/usr/include/c++/11/bits/stl_iterator_base_funcs.h:
+/usr/include/x86_64-linux-gnu/asm/errno.h:
 
 /usr/include/c++/11/bits/stl_uninitialized.h:
 
@@ -548,6 +554,18 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/ctype.h:
 
+/usr/include/c++/11/bits/stl_deque.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/c++/11/bits/postypes.h:
+
+/usr/include/c++/11/bits/stl_heap.h:
+
+/usr/include/c++/11/bits/exception_defines.h:
+
+/usr/include/c++/11/string_view:
+
 /usr/include/c++/11/bits/exception.h:
 
 /usr/include/c++/11/bits/istream.tcc:
@@ -556,9 +574,9 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/c++/11/bits/predefined_ops.h:
 
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+/usr/include/c++/11/bits/stl_iterator_base_funcs.h:
 
-/usr/include/c++/11/bits/postypes.h:
+/usr/include/c++/11/bits/stl_queue.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
@@ -574,13 +592,17 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/c++/11/bits/locale_classes.h:
 
+/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/c++/11/bits/move.h:
+
 /usr/include/c++/11/bits/stl_relops.h:
 
 /usr/include/c++/11/bits/ios_base.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+/usr/include/x86_64-linux-gnu/bits/timex.h:
 
-/usr/include/x86_64-linux-gnu/asm/errno.h:
+/usr/include/c++/11/bits/invoke.h:
 
 /usr/include/c++/11/bits/basic_string.tcc:
 
@@ -602,19 +624,23 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/c++/11/ext/numeric_traits.h:
 
-/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+/usr/include/c++/11/bits/stl_multimap.h:
 
-/usr/include/c++/11/pstl/pstl_config.h:
-
-/usr/include/c++/11/bits/allocator.h:
-
-/usr/include/x86_64-linux-gnu/bits/byteswap.h:
+/usr/include/features.h:
 
 /usr/include/c++/11/bits/locale_facets.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/include/c++/11/string:
+
+/usr/include/c++/11/bits/alloc_traits.h:
+
+/usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/c++/11/bits/allocator.h:
+
+/usr/include/c++/11/pstl/pstl_config.h:
 
 /usr/include/asm-generic/errno.h:
 
@@ -632,11 +658,23 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/c++/11/bits/locale_facets.tcc:
 
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/bits/endian.h:
+
+/usr/include/c++/11/bits/basic_string.h:
+
 /usr/include/c++/11/bits/erase_if.h:
 
 /usr/include/c++/11/bits/basic_ios.h:
 
 /usr/include/alloca.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/c++/11/queue:
 
 /usr/include/c++/11/array:
 
@@ -672,31 +710,23 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/asm-generic/errno-base.h:
 
-/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
-
-/usr/include/c++/11/bits/exception_defines.h:
-
-/usr/include/c++/11/string_view:
-
 /usr/include/c++/11/bits/stl_bvector.h:
 
 /usr/include/c++/11/bits/ostream_insert.h:
 
 /usr/include/c++/11/ostream:
 
-/usr/include/features.h:
+/usr/include/c++/11/bits/stl_function.h:
 
-/usr/include/c++/11/bits/stl_multimap.h:
+/usr/include/x86_64-linux-gnu/bits/time.h:
 
-/usr/include/x86_64-linux-gnu/bits/timex.h:
+/usr/include/c++/11/bits/stl_pair.h:
 
-/usr/include/c++/11/bits/invoke.h:
+/usr/include/c++/11/ext/atomicity.h:
 
 /usr/include/c++/11/system_error:
 
 /usr/include/c++/11/bits/stl_vector.h:
-
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
 
 /usr/include/c++/11/bits/streambuf.tcc:
 
@@ -720,10 +750,6 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/c++/11/bits/vector.tcc:
 
-/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/include/c++/11/ios:
-
 /usr/include/c++/11/cctype:
 
 /usr/include/c++/11/cerrno:
@@ -738,13 +764,19 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 
 /usr/include/c++/11/debug/debug.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+
+/usr/include/c++/11/ios:
+
+/usr/include/c++/11/deque:
+
 /usr/include/c++/11/exception:
 
 /usr/include/c++/11/iosfwd:
 
-/usr/include/c++/11/bits/cxxabi_forced.h:
-
 /usr/include/c++/11/fstream:
+
+/usr/include/c++/11/bits/cxxabi_forced.h:
 
 /usr/include/c++/11/ext/alloc_traits.h:
 
@@ -757,6 +789,8 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 /usr/include/linux/errno.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
+
+/usr/include/c++/11/bits/deque.tcc:
 
 /usr/include/c++/11/backward/binders.h:
 
@@ -811,13 +845,3 @@ CMakeFiles/xmlParser.dir/src/xml.cpp.o: /home/shreyas/Documents/xmlParser/xml_pa
 /usr/include/x86_64-linux-gnu/bits/errno.h:
 
 /usr/include/wctype.h:
-
-/usr/include/c++/11/bits/move.h:
-
-/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs.h:
-
-/usr/include/c++/11/bits/basic_string.h:
-
-/usr/include/x86_64-linux-gnu/bits/endian.h:
