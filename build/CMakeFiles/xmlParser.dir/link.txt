@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/xmlParser.dir/src/main.cpp.o CMakeFiles/xmlParser.dir/src/xml.cpp.o -o xmlParser
