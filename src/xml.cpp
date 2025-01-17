@@ -34,22 +34,23 @@ void xml::parse()
             }
         }
         
-        
-        for (int i = 0; i < line.length(); i++)
+        int i = 0;
+        //for (int i = 0; i < line.length(); i++)
+        while(i < line.length())
         {   
 
             if (line[i] ==' ')
             {
-                continue;
+                i++;
             }
-            if ((line[i] != ' ') && line[i] != '<')
+            else if ((line[i] != ' ') && line[i] != '<' && line[i] != '>')
             {
                 if (currParent.empty())
                 {
                     std::cout << "parse error text before tag\n";
                     return;
                 }
-                currParent.front()->hasInnerText = true;
+                currParent.top()->hasInnerText = true;
 
                 //check if it has closing tag </...>
                 int check = line.find('<', i);
@@ -60,7 +61,7 @@ void xml::parse()
                         if(line[check+1] == '/'){
                             while (line[i] != '<')
                             {
-                                currParent.front()->innerText += line[i];
+                                currParent.top()->innerText += line[i];
                                 if (i+1 >= line.length())
                                 {
                                     std::cout << "huh? would i even print?\n";
@@ -77,7 +78,7 @@ void xml::parse()
             
             
            
-            if ((line[i] == '<'))
+            else if ((line[i] == '<'))
             {   
                 // check if closing tag exists
                 int check = line.find('>', i);
@@ -98,7 +99,7 @@ void xml::parse()
                 // sanity check
                 if ((i+1 < line.length()))
                 {
-                    if (((line[i+1] != '/') && (!currParent.empty()) && (!currParent.front()->hasInnerText)) || (line[i+1] != '/') && (!rootSet))
+                    if (((line[i+1] != '/') && (!currParent.empty()) && (!currParent.top()->hasInnerText)) || (line[i+1] != '/') && (!rootSet))
                     {
                         // move i to point after the <
                         i++;
@@ -140,7 +141,7 @@ void xml::parse()
                             // TODO
                         }  
                     }
-                    else if ((line[i+1] != '/') && (!currParent.empty()) && (currParent.front()->hasInnerText))
+                    else if ((line[i+1] != '/') && (!currParent.empty()) && (currParent.top()->hasInnerText))
                     {   
                         std::cout << "parsing error\n";
                         return;
@@ -152,7 +153,7 @@ void xml::parse()
                     if ((line[i+1] == '/')){
 
                         // sanity check 
-                        if (i+2 < line.length())
+                        if (i+2 > line.length())
                         {
                             std::cout << "Parsing error\n";
                         }
@@ -174,11 +175,16 @@ void xml::parse()
                         
                         // tag that was opened has now been closed
                         // so we are done with that node
-                        if (currParent.front()->tag == stuff)
+                        if (currParent.top()->tag == stuff)
                         {
-                            XMLNode* child = currParent.front();
+                            
+                            XMLNode* child = currParent.top();
+                            
+                            if(currParent.top() == root){
+                                currParent.top()->children.push_back(child);
+                            }
                             currParent.pop();
-                            currParent.front()->children.push_back(child);
+                            
                         }
                         else{
                             std::cout << "opening and closing tags do not match\n";
@@ -194,7 +200,7 @@ void xml::parse()
             // only two cases either 
             // end of new tag
             // or start of inner text
-            if (line[i] == '>')
+            else if (line[i] == '>')
             {
                 int check = line.find('<', i);
                 
@@ -204,7 +210,7 @@ void xml::parse()
                         bool run = true;
                         while (run)
                         {
-                            currParent.front()->innerText += line[i];
+                            currParent.top()->innerText += line[i];
                             if (i+1 >= line.length())
                             {   
                                 std::cout << "oh no it prints\n";
@@ -218,13 +224,20 @@ void xml::parse()
                             }
                             
                         }
-                        
+                        //weird hack
+                        //i--;
                         
                     }
                     
                 }
+                else{
+                    i++;
+                }
                 // then it must exist in the next line
                 
+            }
+            else{
+                i++;
             }
 
             

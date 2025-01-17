@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/home/shreyas/Documents/xmlParser/xml_parser")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/shreyas/Documents/xmlParser/xml_parser/build")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/shreyas/Documents/xmlParser/xml_parser")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

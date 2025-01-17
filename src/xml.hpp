@@ -5,6 +5,7 @@
 #include <fstream>  
 #include <cctype>
 #include <queue>
+#include <stack>
 
 class xml
 {
@@ -33,7 +34,7 @@ private:
 
    
 public:
-    std::queue<XMLNode*> currParent;
+    std::stack<XMLNode*> currParent;
     xml();
     ~xml();
 };
