@@ -6,7 +6,7 @@ bool xml::loadFile()
     std::string filePath;
     //std::cout << "Enter the file name: ";
     //std::cin >> filePath;
-    doc.open("../test.xml");
+    doc.open("test.xml");
 
     // return val of 1 = file could not be found
     if (doc.fail())
@@ -80,7 +80,7 @@ void xml::parse()
             if ((line[i] == '<'))
             {   
                 // check if closing tag exists
-                int check = line.find('>');
+                int check = line.find('>', i);
                 if (check == std::string::npos){
                     std::cout << "No closing tag found in line: \n";
                     return;

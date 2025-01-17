@@ -25,7 +25,7 @@ private:
     char expectedChar;
     XMLNode *root=nullptr;
     XMLNode *currNode;
-    std::queue<XMLNode*> currParent;
+    
     
     bool loadFile();
     void parse();
@@ -33,6 +33,7 @@ private:
 
    
 public:
+    std::queue<XMLNode*> currParent;
     xml();
     ~xml();
 };
