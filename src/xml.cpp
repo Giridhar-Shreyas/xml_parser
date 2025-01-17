@@ -83,7 +83,7 @@ void xml::parse()
                 // check if closing tag exists
                 int check = line.find('>', i);
                 if (check == std::string::npos){
-                    std::cout << "No closing tag found in line: \n";
+                    std::cout << "No closing tag found in line: " << lineNum << "\n";
                     return;
                 }
 
@@ -180,10 +180,14 @@ void xml::parse()
                             
                             XMLNode* child = currParent.top();
                             
-                            if(currParent.top() == root){
+                            if(currParent.top() != root){
+                                currParent.pop();
                                 currParent.top()->children.push_back(child);
                             }
-                            currParent.pop();
+                            else{
+                                currParent.pop();
+                            }
+                            
                             
                         }
                         else{
@@ -207,6 +211,14 @@ void xml::parse()
                 if (check != std::string::npos){
                     if (!currParent.empty())
                     {
+                        // sanity check 
+                        if (i+1 > line.length())
+                        {
+                            std::cout << "Parsing error\n";
+                        }
+                        // skip over >
+                        i++;
+                        currParent.top()->hasInnerText = true;
                         bool run = true;
                         while (run)
                         {
@@ -248,7 +260,39 @@ void xml::parse()
 }
 
 void xml::parseRoot(){
-    std::cout << root->tag << " " << root->innerText <<"\n";
+
+    std::stack<XMLNode *> nodes;
+    std::vector<std::string> visited;
+    nodes.push(root);
+
+    while (!nodes.empty())
+    {
+        auto node = nodes.top();
+        nodes.pop();
+
+        if (std::find(visited.begin(), visited.end(), node->tag) == visited.end())
+        {
+            visited.push_back(node->tag);
+            std::cout << "tag name: " << node->tag << " ";
+            if (node->hasInnerText)
+            {
+                std::cout << "inner text: " << node->innerText << " ";
+            }
+            std::cout << "\n";
+        }
+
+        for (auto i = 0 ; i < node->children.size(); i++)
+        {
+            if (std::find(visited.begin(), visited.end(), node->children[i]->tag) == visited.end())
+            {
+                nodes.push(node->children[i]);
+            }
+        }
+        
+        
+
+    }
+    
 }
 
 xml::xml()
@@ -261,6 +305,7 @@ xml::xml()
     }
     xml::parse();
     xml::parseRoot();
+
     
     
 

@@ -6,6 +6,7 @@
 #include <cctype>
 #include <queue>
 #include <stack>
+#include <algorithm>
 
 class xml
 {

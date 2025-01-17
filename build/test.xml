@@ -1,3 +1,10 @@
 <note>
-    <myNote>yellow</myNote>
+    <myNote>
+        <name>abc</name>
+        <mesg>123</mesg>
+    </myNote>
+    <myNote>
+        <name>123</name>
+        <mesg>abc</mesg>
+    </myNote>
 </note>
