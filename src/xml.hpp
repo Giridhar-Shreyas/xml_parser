@@ -19,6 +19,7 @@ private:
         std::vector<XMLNode*> children;
         std::string innerText = "";
         bool hasInnerText = false;
+        int nodeId;
     };
 
     std::ifstream doc;
@@ -28,7 +29,7 @@ private:
     XMLNode *root=nullptr;
     XMLNode *currNode;
     
-    
+    int id = 0;
     bool loadFile();
     void parse();
     void parseRoot();

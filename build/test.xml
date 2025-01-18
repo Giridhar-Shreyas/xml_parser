@@ -1,10 +1,10 @@
 <note>
     <myNote>
         <name>abc</name>
-        <mesg>123</mesg>
+        <msg>123</msg>
     </myNote>
     <myNote>
         <name>123</name>
-        <mesg>abc</mesg>
+        <msg>abc</msg>
     </myNote>
 </note>

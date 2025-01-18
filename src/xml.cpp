@@ -127,6 +127,8 @@ void xml::parse()
                         {
                             XMLNode* node = new XMLNode;
                             node->tag = stuff;
+                            node->nodeId = id;
+                            id++;
                             if (!rootSet)
                             {   
                                 this->root = node;
@@ -262,7 +264,7 @@ void xml::parse()
 void xml::parseRoot(){
 
     std::stack<XMLNode *> nodes;
-    std::vector<std::string> visited;
+    std::vector<int> visited;
     nodes.push(root);
 
     while (!nodes.empty())
@@ -270,9 +272,9 @@ void xml::parseRoot(){
         auto node = nodes.top();
         nodes.pop();
 
-        if (std::find(visited.begin(), visited.end(), node->tag) == visited.end())
+        if (std::find(visited.begin(), visited.end(), node->nodeId) == visited.end())
         {
-            visited.push_back(node->tag);
+            visited.push_back(node->nodeId);
             std::cout << "tag name: " << node->tag << " ";
             if (node->hasInnerText)
             {
@@ -283,7 +285,7 @@ void xml::parseRoot(){
 
         for (auto i = 0 ; i < node->children.size(); i++)
         {
-            if (std::find(visited.begin(), visited.end(), node->children[i]->tag) == visited.end())
+            if (std::find(visited.begin(), visited.end(), node->children[i]->nodeId) == visited.end())
             {
                 nodes.push(node->children[i]);
             }
