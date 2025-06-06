@@ -1,6 +1,249 @@
 #include "xml.hpp"
 
 
+
+
+void xml::atributesInner(const std::string line, int& i, bool& success){
+    /*
+    already checked that there exists a closing tag '>'
+    currently line[i] == ' ' after reading the tag
+    now we need to read the attributes 
+    checks:
+        the attribute must have '='
+        followed by " or '
+            similarly must have a closing " or '
+        
+     */
+    int check = line.find('=', i);
+    char opening = ' ';
+    if(check == std::string::npos){
+        success = false;
+        return;
+    }
+    // else continue
+    else{
+        int check1 = line.find('\'', i);
+        int check2 = line.find('"', i);
+
+        if(check1 == std::string::npos && check2 == std::string::npos){
+            success = false;
+            return;
+        }
+        // the = is outside of "" or ''
+        else if (check1 != std::string::npos && check2 == std::string::npos)
+        {
+            if (check > check1)
+            {
+                success = false;
+                return;
+            }
+            else{
+                opening = '\'';
+            }
+            
+        }
+        else if (check1 == std::string::npos && check2 != std::string::npos){
+            if (check > check2)
+            {
+                success = false;
+                return;
+            }
+            else{
+                opening = '"';
+            }
+
+        }
+        else{
+            int checkmax = std::max(check1, check2);
+            if (check > checkmax)
+            {
+                success = false;
+                return;
+            }
+            if (checkmax == check1)
+            {
+                opening = '\'';
+            }
+            else{
+                opening = '"';
+            }
+        }
+    }
+
+    //move the pointer to after the space
+
+    i+=1;
+    std::string key = "";
+
+    bool run = true;
+    while (run)
+    {
+        key += line[i];
+
+        if (i+1 >= line.length())
+        {
+            std::cout << "parse error\n";
+            return;
+        }
+        
+        i++;
+        if(line[i] == '='){
+            run = false;
+        }
+    }
+    
+
+    bool done = false;
+    bool outOfString = false;
+    
+    if ((i+1 < line.length()))
+    {
+        if (line[i+1] =='"')
+        {
+           check = line.find('"', i);
+            if (check != std::string::npos){
+                // all is good read the value for key = key
+                i++;
+                i++;
+                std::string value = "";
+                bool run = true;
+                while (run)
+                {
+                    value += line[i];
+
+                    if (i+1 >= line.length())
+                    {
+                        std::cout << "parse error\n";
+                        return;
+                    }
+                    
+                    i++;
+                    if(line[i] == '"'){
+                        run = false;
+                    }
+                }
+                currAttributes.push_back(std::make_tuple(key, value));
+                    
+                if (i+1 < line.length())
+                {
+                    i++;
+                    if (line[i] == ' ')
+                    {
+                        if (i+1 < line.length())
+                        {
+                            i++;
+                            atributesInner(line, i, success);
+                        }
+                        else{
+                            success = false;
+                            return;
+                        }
+                        
+                    }
+                    else{
+                        // we are done no more attributes
+                        success = true;
+                        return;
+                    }
+                       
+                    
+                }
+                else{
+                    success = false;
+                    return;
+                }
+
+            }
+            else{
+                success = false;
+                return;
+            }
+
+        }
+        else if (line[i+1] == '\'')
+        {
+            check = line.find('\'', i);
+            if (check != std::string::npos){
+                // all is good read the value for key = key
+                i++;
+                i++;
+                std::string value = "";
+                bool run = true;
+                while (run)
+                {
+                    value += line[i];
+
+                    if (i+1 >= line.length())
+                    {
+                        std::cout << "parse error\n";
+                        return;
+                    }
+                    
+                    i++;
+                    if(line[i] == '\''){
+                        run = false;
+                    }
+                }
+                currAttributes.push_back(std::make_tuple(key, value));
+                    
+                if (i+1 < line.length())
+                {
+                    i++;
+                    if (line[i] == ' ')
+                    {
+                        if (i+1 < line.length())
+                        {
+                            i++;
+                            atributesInner(line, i, success);
+                        }
+                        else{
+                            success = false;
+                            return;
+                        }
+                        
+                    }
+                    else{
+                        // we are done no more attributes
+                        success = true;
+                        return;
+                    }
+                       
+                    
+                }
+                else{
+                    success = false;
+                    return;
+                }
+                
+                 
+            }
+            else{
+                success = false;
+                return;
+            }
+
+        }
+        else{
+            success = false;
+            return;
+        }
+    
+    }
+    else
+    {
+        success = false;
+        return;
+    }
+    
+    
+
+}
+
+
+
+
+
+
 bool xml::loadFile()
 {
     std::string filePath;
@@ -101,7 +344,7 @@ void xml::parse()
                 {
                     if (((line[i+1] != '/') && (!currParent.empty()) && (!currParent.top()->hasInnerText)) || (line[i+1] != '/') && (!rootSet))
                     {
-                        // move i to point after the <
+                        // move i to point after the '<'
                         i++;
                         //start recording
                         std::string stuff = "";
@@ -123,6 +366,14 @@ void xml::parse()
                         }
 
                         // tag ended and this node has no atributes
+                        
+
+                        if (line[i] == ' ')
+                        {
+                            bool success = false;
+                            atributesInner(line, i, success);
+                        }
+                        
                         if (line[i] == '>')
                         {
                             XMLNode* node = new XMLNode;
@@ -134,14 +385,19 @@ void xml::parse()
                                 this->root = node;
                                 rootSet = true;
                             }
+                            if (!currAttributes.empty())
+                            {
+                                for (size_t i = 0; i < currAttributes.size(); i++)
+                                {
+                                    node->attributes.insert(std::pair<std::string, std::string>(std::get<0>(currAttributes[i]), std::get<1>(currAttributes[i])));
+                                }
+                                
+                            }
+                            
                             currParent.push(node);
 
                         }
-
-                        if (line[i] == ' ')
-                        {
-                            // TODO
-                        }  
+ 
                     }
                     else if ((line[i+1] != '/') && (!currParent.empty()) && (currParent.top()->hasInnerText))
                     {   
@@ -185,7 +441,8 @@ void xml::parse()
                             if(currParent.top() != root){
                                 currParent.pop();
                                 currParent.top()->children.push_back(child);
-                            }
+                            }                // then it must exist in the next line
+
                             else{
                                 currParent.pop();
                             }
@@ -218,7 +475,7 @@ void xml::parse()
                         {
                             std::cout << "Parsing error\n";
                         }
-                        // skip over >
+                        // skip over '>'
                         i++;
                         currParent.top()->hasInnerText = true;
                         bool run = true;
@@ -238,8 +495,6 @@ void xml::parse()
                             }
                             
                         }
-                        //weird hack
-                        //i--;
                         
                     }
                     
@@ -261,6 +516,8 @@ void xml::parse()
     return;
 }
 
+
+
 void xml::parseRoot(){
 
     std::stack<XMLNode *> nodes;
@@ -281,6 +538,21 @@ void xml::parseRoot(){
                 std::cout << "inner text: " << node->innerText << " ";
             }
             std::cout << "\n";
+
+            int count = 0;
+            if(!node ->attributes.empty())
+            {
+                auto start = node->attributes.begin();
+
+                while(start != node->attributes.end())
+                {
+                    std::cout << "attribute tag: " << start->first  << "\n"; 
+                    std::cout << "attribute value: " << start->second  << "\n"; 
+
+                    start++;
+                }
+                    std::cout << "\n";
+            }
         }
 
         for (auto i = 0 ; i < node->children.size(); i++)
@@ -307,9 +579,6 @@ xml::xml()
     }
     xml::parse();
     xml::parseRoot();
-
-    
-    
 
     
 }

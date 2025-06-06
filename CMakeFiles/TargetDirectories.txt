@@ -1,3 +1,0 @@
-/home/shreyas/Documents/xmlParser/xml_parser/CMakeFiles/xmlParser.dir
-/home/shreyas/Documents/xmlParser/xml_parser/CMakeFiles/edit_cache.dir
-/home/shreyas/Documents/xmlParser/xml_parser/CMakeFiles/rebuild_cache.dir

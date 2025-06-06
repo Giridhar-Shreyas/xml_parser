@@ -28,15 +28,19 @@ private:
     char expectedChar;
     XMLNode *root=nullptr;
     XMLNode *currNode;
-    
     int id = 0;
+
+
+
     bool loadFile();
     void parse();
     void parseRoot();
+    void atributesInner(const std::string line, int& i, bool& success);
 
    
 public:
     std::stack<XMLNode*> currParent;
+    std::vector<std::tuple<std::string, std::string>> currAttributes;
     xml();
     ~xml();
 };
