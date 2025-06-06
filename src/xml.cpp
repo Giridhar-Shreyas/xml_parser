@@ -1,5 +1,6 @@
 #include "xml.hpp"
 
+int lineNum;
 
 
 
@@ -85,8 +86,8 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
 
         if (i+1 >= line.length())
         {
-            std::cout << "parse error\n";
-            return;
+            std::cerr << "parse error while reading attributes at line " << lineNum << "\n";
+            exit(-1);
         }
         
         i++;
@@ -124,8 +125,8 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
 
                     if (i+1 >= line.length())
                     {
-                        std::cout << "parse error\n";
-                        return;
+                        std::cerr << "parse error while reading attributes at line " << lineNum << "\n";
+                        exit(-1);
                     }
                     
                     i++;
@@ -191,8 +192,8 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
 
                     if (i+1 >= line.length())
                     {
-                        std::cout << "parse error\n";
-                        return;
+                        std::cerr << "parse error while reading attributes at line " << lineNum << "\n";
+                        exit(-1);
                     }
                     
                     i++;
@@ -277,7 +278,7 @@ bool xml::loadFile()
 
 void xml::parse()
 {
-    int lineNum = 0;
+    lineNum = 0;
 
     while (!doc.eof())
     {
@@ -306,8 +307,8 @@ void xml::parse()
             {
                 if (currParent.empty())
                 {
-                    std::cout << "parse error text before tag\n";
-                    return;
+                    std::cerr << "parse error text before tag at line" << lineNum << "\n";
+                    exit(-1);
                 }
                 currParent.top()->hasInnerText = true;
 
@@ -323,8 +324,8 @@ void xml::parse()
                                 currParent.top()->innerText += line[i];
                                 if (i+1 >= line.length())
                                 {
-                                    std::cout << "huh? would i even print?\n";
-                                    return;
+                                    std::cerr << "parsing error at line " << lineNum << "\n";
+                                    exit(-1);
                                 }
                                 i++;
                                 
@@ -342,14 +343,16 @@ void xml::parse()
                 // check if closing tag exists
                 int check = line.find('>', i);
                 if (check == std::string::npos){
-                    std::cout << "No closing tag found in line: " << lineNum << "\n";
-                    return;
+                    std::cerr << "No closing tag found in line: " << lineNum << "\n";
+                    exit(-1);
                 }
+                
+                
 
                 if (currParent.empty() && !rootSet && lineNum!=0)
                 {   
-                    std::cout << "multiple roots parsing error\n";
-                    return;
+                    std::cerr << "multiple roots parsing error at line " << lineNum << "\n";
+                    exit(-1);
                 }
                 
 
@@ -371,8 +374,8 @@ void xml::parse()
 
                             if (i+1 >= line.length())
                             {
-                                std::cout << "parse error\n";
-                                return;
+                                std::cerr << "parse error while reading opening tag at line" << lineNum << "\n";
+                                exit(-1);
                             }
                             
                             i++;
@@ -417,8 +420,8 @@ void xml::parse()
                     }
                     else if ((line[i+1] != '/') && (!currParent.empty()) && (currParent.top()->hasInnerText))
                     {   
-                        std::cout << "parsing error\n";
-                        return;
+                        std::cerr << "parsing error at line " << lineNum << "\n";
+                        exit(-1);
                     }
 
                 
@@ -429,7 +432,8 @@ void xml::parse()
                         // sanity check 
                         if (i+2 > line.length())
                         {
-                            std::cout << "Parsing error\n";
+                            std::cerr << "Parsing error while reading closing tag at line number " << lineNum << "\n";
+                            exit(-1);
                         }
                         
                         // move pointer to start read after </
@@ -441,8 +445,8 @@ void xml::parse()
                             stuff += line[i];
                             if (i+1 >= line.length())
                             {
-                                std::cout << "parse error\n";
-                                return;
+                                std::cerr << "parse error while reading closing tag at line number" << lineNum << "\n";
+                                exit(-1);
                             }
                             i++;
                         }
@@ -466,8 +470,8 @@ void xml::parse()
                             
                         }
                         else{
-                            std::cout << "opening and closing tags do not match\n";
-                            return;
+                            std::cerr << "opening and closing tags do not match for opening tag = \"" << currParent.top()->tag << "\" and closing tag \"" << stuff << "\" at line " << lineNum <<"\n";
+                            exit(-1);
                         }
                         
 
@@ -502,8 +506,8 @@ void xml::parse()
                                 currParent.top()->innerText += line[i];
                                 if (i+1 >= line.length())
                                 {   
-                                    std::cout << "oh no it prints\n";
-                                    return;
+                                    std::cerr << "parsing error at line " << lineNum << "\n";
+                                    exit(-1);
                                 }
                                 i++;
                                 
@@ -535,6 +539,13 @@ void xml::parse()
         }
         lineNum++;
     }
+
+    if(!currParent.empty()){
+        std::cerr << "Closing tag did not have / for tag name " << currParent.top()->tag << " at line " << lineNum << " Or previous line" << "\n";
+        std::cerr << "And/Or the opening and closing names might not match for tag name" << "\n";
+        exit(-1);
+    }
+
     return;
 }
 

@@ -29,10 +29,7 @@ private:
 
     std::ifstream doc;
     bool rootSet = false;
-    bool unexpectedNl = false;
-    char expectedChar;
     XMLNode *root=nullptr;
-    XMLNode *currNode;
     int id = 0;
 
 
