@@ -72,7 +72,10 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
 
     //move the pointer to after the space
 
-    i+=1;
+    //i+=1;
+    if(line[i] == ' '){
+        i++;
+    }
     std::string key = "";
 
     bool run = true;
@@ -103,8 +106,16 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
            check = line.find('"', i);
             if (check != std::string::npos){
                 // all is good read the value for key = key
-                i++;
-                i++;
+                if (!rootSet)
+                {
+                    i++;
+                }
+                
+                while (line[i] == ' ')
+                {
+                    i++;
+                }
+                
                 std::string value = "";
                 bool run = true;
                 while (run)
@@ -165,8 +176,13 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
             check = line.find('\'', i);
             if (check != std::string::npos){
                 // all is good read the value for key = key
-                i++;
-                i++;
+                if(!rootSet){
+                    i++;
+                }
+                while (line[i] == ' ')
+                {
+                    i++;
+                }
                 std::string value = "";
                 bool run = true;
                 while (run)
@@ -466,6 +482,7 @@ void xml::parse()
             else if (line[i] == '>')
             {
                 int check = line.find('<', i);
+                currAttributes.clear();
                 
                 if (check != std::string::npos){
                     if (!currParent.empty())
@@ -476,24 +493,29 @@ void xml::parse()
                             std::cout << "Parsing error\n";
                         }
                         // skip over '>'
-                        i++;
-                        currParent.top()->hasInnerText = true;
-                        bool run = true;
-                        while (run)
-                        {
-                            currParent.top()->innerText += line[i];
-                            if (i+1 >= line.length())
-                            {   
-                                std::cout << "oh no it prints\n";
-                                return;
-                            }
+                        if(line[i+1] != '<') { 
                             i++;
-                            
-                            if (line[i] == '<')
+                            currParent.top()->hasInnerText = true;
+                            bool run = true;
+                            while (run)
                             {
-                                run = false;
+                                currParent.top()->innerText += line[i];
+                                if (i+1 >= line.length())
+                                {   
+                                    std::cout << "oh no it prints\n";
+                                    return;
+                                }
+                                i++;
+                                
+                                if (line[i] == '<')
+                                {
+                                    run = false;
+                                }
+                                
                             }
-                            
+                        }
+                        else{
+                            i++;
                         }
                         
                     }
@@ -532,12 +554,11 @@ void xml::parseRoot(){
         if (std::find(visited.begin(), visited.end(), node->nodeId) == visited.end())
         {
             visited.push_back(node->nodeId);
-            std::cout << "tag name: " << node->tag << " ";
+            std::cout << "tag name: " << node->tag << " \n";
             if (node->hasInnerText)
             {
-                std::cout << "inner text: " << node->innerText << " ";
+                std::cout << "inner text: " << node->innerText << " \n";
             }
-            std::cout << "\n";
 
             int count = 0;
             if(!node ->attributes.empty())
