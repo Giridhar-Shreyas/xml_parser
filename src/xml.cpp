@@ -542,13 +542,13 @@ void xml::parse()
 
 void xml::parseRoot(){
 
-    std::stack<XMLNode *> nodes;
+    std::queue<XMLNode *> nodes;
     std::vector<int> visited;
     nodes.push(root);
 
     while (!nodes.empty())
     {
-        auto node = nodes.top();
+        auto node = nodes.front();
         nodes.pop();
 
         if (std::find(visited.begin(), visited.end(), node->nodeId) == visited.end())
@@ -606,4 +606,5 @@ xml::xml()
 
 xml::~xml()
 {
+    delete root;
 }

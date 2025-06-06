@@ -20,6 +20,11 @@ private:
         std::string innerText = "";
         bool hasInnerText = false;
         int nodeId;
+
+        ~XMLNode() {
+        for (auto child : children)
+            delete child;
+        }
     };
 
     std::ifstream doc;
