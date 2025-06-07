@@ -257,6 +257,11 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
 }
 
 
+bool isOnlyWhitespace(const std::string& str) {
+    return std::all_of(str.begin(), str.end(), [](unsigned char c) {
+        return std::isspace(c);
+    });
+}
 
 
 
@@ -330,6 +335,12 @@ void xml::parse()
                                 i++;
                                 
                             }
+                            if (isOnlyWhitespace(currParent.top()->innerText))
+                            {
+                                currParent.top()->hasInnerText = false;
+                                currParent.top()->innerText = "";
+                            }
+                            
                         }
                     }
                 }
@@ -517,6 +528,11 @@ void xml::parse()
                                 }
                                 
                             }
+                            if (isOnlyWhitespace(currParent.top()->innerText))
+                            {
+                                currParent.top()->hasInnerText = false;
+                                currParent.top()->innerText = "";
+                            }
                         }
                         else{
                             i++;
@@ -565,11 +581,15 @@ void xml::parseRoot(){
         if (std::find(visited.begin(), visited.end(), node->nodeId) == visited.end())
         {
             visited.push_back(node->nodeId);
-            std::cout << "tag name: " << node->tag << " \n";
+
+            
+            //std::cout << "tag name: " << node->tag << " \n";
+
             if (node->hasInnerText)
             {
-                std::cout << "inner text: " << node->innerText << " \n";
+                //std::cout << "inner text: " << node->innerText << " \n";
             }
+            
 
             int count = 0;
             if(!node ->attributes.empty())
@@ -578,13 +598,20 @@ void xml::parseRoot(){
 
                 while(start != node->attributes.end())
                 {
-                    std::cout << "attribute tag: " << start->first  << "\n"; 
-                    std::cout << "attribute value: " << start->second  << "\n"; 
+                    //std::cout << "attribute tag: " << start->first  << "\n"; 
+                    //std::cout << "attribute value: " << start->second  << "\n"; 
 
                     start++;
                 }
-                    std::cout << "\n";
+                    //std::cout << "\n";
             }
+
+            if (node->hasInnerText && !node->children.empty())
+            {
+                std::cerr << "The tag " << node->tag << " has both inner tag and text which is not allowed\n";
+                exit(-1);
+            }
+            
         }
 
         for (auto i = 0 ; i < node->children.size(); i++)
@@ -604,22 +631,22 @@ void xml::parseRoot(){
 void xml::xmlInner(XMLNode * node, int depth, std::ofstream& file){
     for (size_t i = 0; i < depth; i++)
     {
-        file << '\t';
+        file   << '\t';
     }
 
-    file << "<" << node->tag;
+    file   << "<" << node->tag;
 
     for (auto it = node->attributes.begin(); it != node->attributes.end(); it++)
     {
-        file << " " << it->first << "=\"" << it->second << "\"";
+        file   << " " << it->first << "=\"" << it->second << "\"";
     }
 
-    file << ">";
+    file   << ">";
 
     if (node->hasInnerText) {
-        file << node->innerText;
+        file   << node->innerText;
     } else {
-        file << "\n";
+        file   << "\n";
     }
 
     for (auto i = 0 ; i < node->children.size(); i++)
@@ -628,9 +655,9 @@ void xml::xmlInner(XMLNode * node, int depth, std::ofstream& file){
         }
 
     if (!node->hasInnerText && !node->children.empty()) {
-        for (int i = 0; i < depth; ++i) file << '\t';
+        for (int i = 0; i < depth; ++i) file   << '\t';
     }
-    file << "</" << node->tag << ">\n";
+    file   << "</" << node->tag << ">\n";
 }
 
 
