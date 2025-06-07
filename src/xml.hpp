@@ -38,11 +38,14 @@ private:
     void parse();
     void parseRoot();
     void atributesInner(const std::string line, int& i, bool& success);
+    void xmlInner(XMLNode * node, int depth, std::ofstream& file);
+    
 
    
 public:
     std::stack<XMLNode*> currParent;
     std::vector<std::tuple<std::string, std::string>> currAttributes;
+    void writeToFile(std::string fileName);
     xml();
     ~xml();
 };

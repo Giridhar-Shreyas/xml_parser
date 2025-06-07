@@ -601,6 +601,55 @@ void xml::parseRoot(){
     
 }
 
+void xml::xmlInner(XMLNode * node, int depth, std::ofstream& file){
+    for (size_t i = 0; i < depth; i++)
+    {
+        file << '\t';
+    }
+
+    file << "<" << node->tag;
+
+    for (auto it = node->attributes.begin(); it != node->attributes.end(); it++)
+    {
+        file << " " << it->first << "=\"" << it->second << "\"";
+    }
+
+    file << ">";
+
+    if (node->hasInnerText) {
+        file << node->innerText;
+    } else {
+        file << "\n";
+    }
+
+    for (auto i = 0 ; i < node->children.size(); i++)
+        {
+            xmlInner(node->children[i], depth+1, file);
+        }
+
+    if (!node->hasInnerText && !node->children.empty()) {
+        for (int i = 0; i < depth; ++i) file << '\t';
+    }
+    file << "</" << node->tag << ">\n";
+}
+
+
+void xml::writeToFile(std::string fileName){
+    std::ofstream outFile(fileName);
+
+    if (!outFile.is_open()) {
+        std::cerr << "Failed to open file: " << fileName << "\n";
+        exit(-1);
+    }
+    xmlInner(root, 0, outFile);
+
+}
+
+
+
+
+
+
 xml::xml()
 {
     bool success = xml::loadFile();
@@ -611,6 +660,7 @@ xml::xml()
     }
     xml::parse();
     xml::parseRoot();
+    xml::writeToFile("copy.xml");
 
     
 }
