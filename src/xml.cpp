@@ -107,10 +107,11 @@ void xml::atributesInner(const std::string line, int& i, bool& success){
            check = line.find('"', i);
             if (check != std::string::npos){
                 // all is good read the value for key = key
-                if (!rootSet)
-                {
+                //if (!rootSet)
+                //{
                     i++;
-                }
+                    i++;
+                //}
                 
                 while (line[i] == ' ')
                 {
@@ -583,11 +584,11 @@ void xml::parseRoot(){
             visited.push_back(node->nodeId);
 
             
-            //std::cout << "tag name: " << node->tag << " \n";
+            std::cout << "tag name: " << node->tag << " \n";
 
             if (node->hasInnerText)
             {
-                //std::cout << "inner text: " << node->innerText << " \n";
+                std::cout << "inner text: " << node->innerText << " \n";
             }
             
 
@@ -598,12 +599,12 @@ void xml::parseRoot(){
 
                 while(start != node->attributes.end())
                 {
-                    //std::cout << "attribute tag: " << start->first  << "\n"; 
-                    //std::cout << "attribute value: " << start->second  << "\n"; 
+                    std::cout << "attribute tag: " << start->first  << "\n"; 
+                    std::cout << "attribute value: " << start->second  << "\n"; 
 
                     start++;
                 }
-                    //std::cout << "\n";
+                    std::cout << "\n";
             }
 
             if (node->hasInnerText && !node->children.empty())
