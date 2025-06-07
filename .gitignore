@@ -1,7 +1,14 @@
 *.out
 *.o
 *.xml
+CmakeCache.txt
+CMakePresets.json
+Makefile
+cmake_install.cmake
+
+
 
 build/
 CMakeFiles/
 .vscode/
+
